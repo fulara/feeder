@@ -14,3 +14,8 @@ now  have this in path whnever you want to cross compile anything: sth like:
 export PATH=pi-tools/arm-bcm2708/arm-linux-gnueabihf/bin:$PATH
 ```
 
+building:
+```
+rustc_target=arm-unknown-linux-gnueabihf
+cargo build --target=$rustc_target && scp target/arm-unknown-linux-gnueabihf/debug/feeder $RASPB:
+```
