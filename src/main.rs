@@ -126,6 +126,11 @@ fn main() {
     let angle = args[1].parse::<i32>().expect("couldnt parse angle.");
 
     rotate(&mut gpio, Rotation::from_angle(angle));
+
+    for p in PINS.iter() {
+        gpio.write(*p, Level::Low);
+    }
+
 }
 
 
