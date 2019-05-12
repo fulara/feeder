@@ -5,3 +5,4 @@ authors = ["fulara <ntszar@gmail.com>"]
 
 [dependencies]
 rppal = "0.8"
+structopt = "0.2"
