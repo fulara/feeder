@@ -133,6 +133,9 @@ struct Opt {
     #[structopt(long = "feed")]
     feed : Option<u32>,
 
+    #[structopt(long = "rotate")]
+    rotate : Option<i32>,
+
     #[structopt(long = "filters")]
     force_filters : Option<bool>,
 }
@@ -166,11 +169,11 @@ fn main() {
         toggle_filters(&mut gpio, filters);
     }
 
-    if let Some(feeder_rotation) = opt.feed {
-        for p in FEEDER_PINS.iter() {
-            gpio.write(*p, Level::Low);
-        }
+    if let Some(rotation) = opt.rotate {
+        rotate(&mut gpio, Rotation::from_angle(rotation));
+    }
 
+    if let Some(feeder_rotation) = opt.feed {
         thread::sleep(Duration::from_millis(100));
 
         toggle_filters(&mut gpio, false);
@@ -187,7 +190,10 @@ fn main() {
         thread::sleep(Duration::from_secs(90));
         toggle_filters(&mut gpio, true);
     }
-    thread::sleep(Duration::from_millis(10000));
+
+    for p in FEEDER_PINS.iter() {
+        gpio.write(*p, Level::Low);
+    }
 }
 
 #[cfg(test)]
